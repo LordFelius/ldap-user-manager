@@ -1,3 +1,12 @@
+#This fork is to improve the flexibility of original version.
+#Under construction
+#intend: allow to config individual search_attribute, all account_attribute and html_form_attributes with SetEnv
+         allow costom objectClass for users and groups in LDAP
+         and some minor changes.
+
+
+
+
 # LDAP User Manager
 
 This is a PHP LDAP account manager; a web-based GUI interface which allows you to quickly populate a new LDAP directory and easily manage user accounts and groups.  It also has a self-service password change module.   
