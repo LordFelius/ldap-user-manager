@@ -8,14 +8,14 @@
  #admin = need to be logged in as an admin to see it
 
  $MODULES = array(
-                    'log_in'          => 'hidden_on_login',
-                    'change_password' => 'auth',
-                    'account_manager' => 'admin',
-                    'log_out'         => 'auth'
+                    'log_in'          => array('title' => 'log_in', 'display' => 'hidden_on_login'),
+                    'change_password' => array('title' => 'change_password', 'display' => 'auth'),
+                    'account_manager' => array('title' => 'account_manager', 'display' => 'admin'),
+                    'log_out'         => array('title' => 'log_out', 'display' => 'auth')
                   );
 
 if ($ACCOUNT_REQUESTS_ENABLED == TRUE) {
-  $MODULES['request_account'] = 'hidden_on_login';
+  $MODULES['request_account'] = array('title' => 'request_account', 'display' => 'hidden_on_login');
 }
 
 ?>
