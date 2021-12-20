@@ -287,7 +287,9 @@ function render_menu() {
             </div>
             <ul class="nav navbar-nav">
                 <?php
-                foreach ($MODULES as $module => $access) {
+                foreach ($MODULES as $module => $property) {
+                    $access = $property['display'];
+                    $title = $property['title'];
 
                     $this_module_name=stripslashes(ucwords(preg_replace('/_/',' ',$module)));
 
@@ -308,7 +310,7 @@ function render_menu() {
                         else {
                             print '<li>';
                         }
-                        print "<a href='${SERVER_PATH}{$module}/'>$this_module_name</a></li>\n";
+                        print "<a href='${SERVER_PATH}{$module}/'>$title</a></li>\n";
                     }
                 }
                 ?>
