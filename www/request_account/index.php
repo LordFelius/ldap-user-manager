@@ -107,13 +107,13 @@ EoT;
 
         <div class="panel panel-default">
             <div class="panel-body">
-                Use this form to send a request for an account to an administrator at <?php print $ORGANISATION_NAME; ?>.
-                If the administrator approves your request they'll get in touch with you to give you your new credentials.
+                填写下方表格以申请建立<?php print $ORGANISATION_NAME; ?>账户。
+                管理员会在数日内向您的邮箱发送通知邮件。
             </div>
         </div>
 
         <div class="panel panel-default">
-            <div class="panel-heading text-center">Request an account for <?php print $ORGANISATION_NAME; ?></div>
+            <div class="panel-heading text-center">申请建立<?php print $ORGANISATION_NAME; ?>账户</div>
             <div class="panel-body text-center">
 
                 <form class="form-horizontal" action='' method='post'>
@@ -137,14 +137,14 @@ EoT;
                     ?>
 
                     <div class="form-group">
-                        <label for="Notes" class="col-sm-4 control-label">Notes</label>
+                        <label for="Notes" class="col-sm-4 control-label">备注</label>
                         <div class="col-sm-6">
                             <textarea class="form-control" id="notes" name="notes" placeholder="Enter any extra information you think the administrator might need to know."><?php if (isset($notes)) { print $notes; } ?></textarea>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="validate" class="col-sm-4 control-label">Validation</label>
+                        <label for="validate" class="col-sm-4 control-label">验证码</label>
                         <div class="col-sm-6">
       <span class="center-block">
         <img src="human.php" class="human-check" alt="Non-human detection">
@@ -157,7 +157,7 @@ EoT;
                     </div>
 
                     <div class="form-group">
-                        <button type="submit" class="btn btn-default">Send request</button>
+                        <button type="submit" class="btn btn-default">发送申请</button>
                     </div>
 
                 </form>
