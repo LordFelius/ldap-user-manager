@@ -53,7 +53,7 @@ render_header("$ORGANISATION_NAME account manager - log in");
     <div class="col-sm-8">
 
         <div class="panel panel-default">
-            <div class="panel-heading text-center">Log in</div>
+            <div class="panel-heading text-center">登入账户管理</div>
             <div class="panel-body text-center">
 
                 <?php if (isset($display_unauth)) { ?>
@@ -78,21 +78,21 @@ render_header("$ORGANISATION_NAME account manager - log in");
                     <?php if (isset($redirect_to) and ($redirect_to != "")) { ?><input type="hidden" name="redirect_to" value="<?php print $redirect_to; ?>"><?php } ?>
 
                     <div class="form-group">
-                        <label for="username" class="col-sm-4 control-label">Username</label>
+                        <label for="username" class="col-sm-4 control-label">用户名</label>
                         <div class="col-sm-6">
                             <input type="text" class="form-control" id="user_id" name="user_id">
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="password" class="col-sm-4 control-label">Password</label>
+                        <label for="password" class="col-sm-4 control-label">密码</label>
                         <div class="col-sm-6">
                             <input type="password" class="form-control" id="confirm" name="password">
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <button type="submit" class="btn btn-default">Log in</button>
+                        <button type="submit" class="btn btn-default">登录</button>
                     </div>
 
                 </form>
