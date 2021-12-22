@@ -9,15 +9,6 @@ if (isset($_GET["unauthorised"])) { $display_unauth = TRUE; }
 if (isset($_GET["session_timeout"])) { $display_logged_out = TRUE; }
 if (isset($_GET["redirect_to"])) { $redirect_to = $_GET["redirect_to"]; }
 
-if (isset($_GET['logged_out'])) {
-    ?>
-    <div class="alert alert-warning">
-        <p class="text-center">You've been automatically logged out because you've been inactive for over
-            <?php print $SESSION_TIMEOUT; ?> minutes. Click on the 'Log in' link to get back into the system.</p>
-    </div>
-    <?php
-}
-
 
 if (isset($_POST["user_id"]) and isset($_POST["password"])) {
 
@@ -45,61 +36,45 @@ if (isset($_POST["user_id"]) and isset($_POST["password"])) {
 
 }
 else {
-
-render_header("$ORGANISATION_NAME account manager - log in");
-
-?>
-<div class="container">
-    <div class="col-sm-8">
-
-        <div class="panel panel-default">
-            <div class="panel-heading text-center">登入账户管理</div>
-            <div class="panel-body text-center">
-
-                <?php if (isset($display_unauth)) { ?>
-                    <div class="alert alert-warning">
-                        Please log in to continue
-                    </div>
-                <?php } ?>
-
-                <?php if (isset($display_logged_out)) { ?>
-                    <div class="alert alert-warning">
-                        You were logged out because your session expired. Log in again to continue.
-                    </div>
-                <?php } ?>
-
-                <?php if (isset($_GET["invalid"])) { ?>
-                    <div class="alert alert-warning">
-                        The username and/or password are unrecognised.
-                    </div>
-                <?php } ?>
-
-                <form class="form-horizontal" action='' method='post'>
-                    <?php if (isset($redirect_to) and ($redirect_to != "")) { ?><input type="hidden" name="redirect_to" value="<?php print $redirect_to; ?>"><?php } ?>
-
-                    <div class="form-group">
-                        <label for="username" class="col-sm-4 control-label">用户名</label>
-                        <div class="col-sm-6">
-                            <input type="text" class="form-control" id="user_id" name="user_id">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="password" class="col-sm-4 control-label">密码</label>
-                        <div class="col-sm-6">
-                            <input type="password" class="form-control" id="confirm" name="password">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-default">登录</button>
-                    </div>
-
-                </form>
-            </div>
-        </div>
-    </div>
-    <?php
+#==============================================================================
+# Smarty
+#==============================================================================
+    if (!defined("SMARTY")) {
+        define("SMARTY", "/usr/share/php/Smarty/Smarty.class.php");
     }
-    render_footer();
+    require_once(SMARTY);
+
+    $compile_dir = isset($smarty_compile_dir) ? $smarty_compile_dir : "../templates_c/";
+    $cache_dir = isset($smarty_cache_dir) ? $smarty_cache_dir : "../cache/";
+
+    $smarty = new Smarty();
+    $smarty->escape_html = true;
+    $smarty->setTemplateDir('../templates/');
+    $smarty->setCompileDir($compile_dir);
+    $smarty->setCacheDir($cache_dir);
+    $smarty->debugging = isset($debug) ? $debug : FALSE;
+
+    error_reporting(0);
+    if ($debug) {
+        error_reporting(E_ALL);
+        # Set debug for LDAP
+        ldap_set_option(NULL, LDAP_OPT_DEBUG_LEVEL, 7);
+    }
+
+# Assign configuration variables
+    $smarty->assign('logged_out',isset($_GET['logged_out']));
+    $smarty->assign('invalid',isset($_GET['invalid']));
+
+    $smarty->assign('display_unauth',isset($display_unauth));
+    $smarty->assign('display_logged_out',isset($display_logged_out));
+
+    $smarty->assign('redirect_to',isset($redirect_to) ? $redirect_to : NULL);
+//$smarty->assign('',);
+
+    #functions
+    $smarty->registerPlugin("function", "render_header", "render_header");
+    $smarty->registerPlugin("function", "render_footer", "render_footer");
+
+    $smarty->display('log_in.tpl');
+    }
     ?>
