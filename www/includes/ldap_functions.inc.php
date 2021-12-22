@@ -478,6 +478,23 @@ function ldap_get_dn_of_user($ldap_connection,$user_name) {
     return FALSE;
 
 }
+
+function ldap_get_user_attributes($ldap_connection,$user_name,$attributes) {
+
+    global $log_prefix, $LDAP, $LDAP_DEBUG;
+
+    if (isset($user_name)) {
+
+        $ldap_search_query = "(${LDAP['search_attribute']}=" . ldap_escape($user_name, "", LDAP_ESCAPE_FILTER) . ")";
+        $ldap_search = @ ldap_search($ldap_connection, "${LDAP['user_dn']}", $ldap_search_query , $attributes);
+        $result = @ ldap_get_entries($ldap_connection, $ldap_search);
+
+        return $result;
+    }
+
+    return FALSE;
+
+}
 ##################################
 
 function ldap_get_group_members($ldap_connection,$group_name,$start=0,$entries=NULL,$sort="asc") {
