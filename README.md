@@ -1,3 +1,7 @@
+Mind: this branch is translated into Chinsese and modified for my own environment.
+对部分页面进行了中文翻译，并有一些个人的个性化配置。
+Migrated: 需要安装Smarty3并手动配置路径。
+
 ## Changes of this fork:
 
 This fork is to add support for any custom objectClasses and attributes for users and groups from LDAP, such as `inetOrgPerson`, `groupOfNames`, `groupOfUniqueNames`and others.
