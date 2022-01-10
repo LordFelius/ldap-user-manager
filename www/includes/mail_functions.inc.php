@@ -1,26 +1,26 @@
 <?php
 
-require_once "/opt/PHPMailer/src/PHPMailer.php";
-require_once "/opt/PHPMailer/src/SMTP.php";
-require_once "/opt/PHPMailer/src/Exception.php";
+require_once "../3rd/PHPMailer/src/PHPMailer.php";
+require_once "../3rd/PHPMailer/src/SMTP.php";
+require_once "../3rd/PHPMailer/src/Exception.php";
 
 #Default email text
 
-$new_account_mail_subject = (getenv('NEW_ACCOUNT_EMAIL_SUBJECT') ? getenv('NEW_ACCOUNT_EMAIL_SUBJECT') : "Your {organisation} account has been created.");
+$new_account_mail_subject = (getenv('NEW_ACCOUNT_EMAIL_SUBJECT') ? getenv('NEW_ACCOUNT_EMAIL_SUBJECT') : "你的 {organisation} 账户已建立。");
 $new_account_mail_body = getenv('NEW_ACCOUNT_EMAIL_BODY') ?: <<<EoNA
-You've been set up with an account for {organisation}.  Your credentials are:
+你的 {organisation} 账户已建立，登录信息为:
 <p>
-Login: {login}<br>
-Password: {password}
+用户名: {login}<br>
+密码: {password}
 <p>
-You should log into <a href="{change_password_url}">{change_password_url}</a> and change the password as soon as possible.
+请尽快前往 <a href="{change_password_url}">{change_password_url}</a> 修改你的密码。
 EoNA;
 
-$reset_password_mail_subject = (getenv('RESET_PASSWORD_EMAIL_SUBJECT') ? getenv('RESET_PASSWORD_EMAIL_SUBJECT') : "Your {organisation} password has been reset.");
+$reset_password_mail_subject = (getenv('RESET_PASSWORD_EMAIL_SUBJECT') ? getenv('RESET_PASSWORD_EMAIL_SUBJECT') : "你的 {organisation} 账户密码已被重置。");
 $reset_password_mail_body = getenv('RESET_PASSWORD_EMAIL_BODY') ?: <<<EoRP
-Your password for {organisation} has been reset.  Your new password is {password}
+你的 {organisation} 账户密码已被重置。新的密码是 {password} 。 若你并未申请重置密码，请联系管理员。
 <p>
-You should log into <a href="{change_password_url}">{change_password_url}</a> and change this password as soon as possible.
+请尽快前往 <a href="{change_password_url}">{change_password_url}</a> 修改你的密码。
 EoRP;
 
 
