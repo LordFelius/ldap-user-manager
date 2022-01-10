@@ -15,19 +15,19 @@
 
                 {if $display_unauth}
                 <div class="alert alert-warning">
-                    Please log in to continue
+                    请登入以继续。
                 </div>
                 {/if}
 
                 {if $display_logged_out}
                 <div class="alert alert-warning">
-                    You were logged out because your session expired. Log in again to continue.
+                    由于长时间无操作，会话已自动登出。请重新登入。
                 </div>
                 {/if}
 
                 {if $invalid}
                 <div class="alert alert-warning">
-                    The username and/or password are unrecognised.
+                    用户名/密码错误。
                 </div>
                 {/if}
 
