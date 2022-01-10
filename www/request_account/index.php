@@ -22,7 +22,7 @@ if($_POST) {
     $error_messages = array();
 
     if (!isset($_POST['validate']) or strcasecmp($_POST['validate'], $_SESSION['proof_of_humanity']) != 0) {
-        array_push($error_messages, "The validation text didn't match the image.");
+        array_push($error_messages, "验证码错误。");
     }
 
     $attribute_map = ldap_complete_account_attribute_array();
@@ -31,7 +31,7 @@ if($_POST) {
         $attr_r = $attribute_map[$attribute];
         $label = $attr_r['label'];
         if (!isset($_POST[$attribute]) or $_POST[$attribute] == "") {
-            array_push($error_messages, "You didn't enter  $label.");
+            array_push($error_messages, "未输入 $label.");
         } else {
             $$attribute = filter_var($_POST[$attribute], FILTER_SANITIZE_STRING);
         }
@@ -44,7 +44,7 @@ if($_POST) {
 
     if (count($error_messages) > 0) { ?>
         <div class="alert alert-danger" role="alert">
-            The request couldn't be sent because:
+            表单填写不合要求：
             <p>
             <ul>
                 <?php
@@ -81,10 +81,10 @@ EoT;
         include_once "mail_functions.inc.php";
         $sent_email = send_email($ACCOUNT_REQUESTS_EMAIL,"$ORGANISATION_NAME account requests",$mail_subject,$mail_body);
         if ($sent_email) {
-            $sent_email_message = "  Thank you. The request was sent and the administrator will process it as soon as possible.";
+            $sent_email_message = "  账户申请已发送到后台管理。管理员将在数日内进行处理。";
         }
         else {
-            $sent_email_message = "  Unfortunately the request wasn't sent because of a technical problem.";
+            $sent_email_message = "  邮件未成功发送。请联系管理员。";
         }
         ?>
         <div class="container">
@@ -129,7 +129,7 @@ EoT;
                             <label for="<?php print $attribute; ?>" class="col-sm-4 control-label"><?php print $label; ?></label>
                             <div class="col-sm-6">
                                 <input type="text" class="form-control" id="<?php print $attribute; ?>" name="<?php print $attribute; ?>"
-                                       placeholder="Required" <?php if (isset($$attribute)) {$default_value=$$attribute; print "value='$default_value'"; } ?>>
+                                       placeholder="必填" <?php if (isset($$attribute)) {$default_value=$$attribute; print "value='$default_value'"; } ?>>
                             </div>
                         </div>
                         <?php
@@ -139,7 +139,7 @@ EoT;
                     <div class="form-group">
                         <label for="Notes" class="col-sm-4 control-label">备注</label>
                         <div class="col-sm-6">
-                            <textarea class="form-control" id="notes" name="notes" placeholder="Enter any extra information you think the administrator might need to know."><?php if (isset($notes)) { print $notes; } ?></textarea>
+                            <textarea class="form-control" id="notes" name="notes" placeholder=""><?php if (isset($notes)) { print $notes; } ?></textarea>
                         </div>
                     </div>
 
@@ -149,10 +149,10 @@ EoT;
       <span class="center-block">
         <img src="human.php" class="human-check" alt="Non-human detection">
         <button type="button" class="btn btn-default btn-sm" onclick="document.querySelector('.human-check').src = 'human.php?' + Date.now()">
-         <span class="glyphicon glyphicon-refresh"></span> Refresh
+         <span class="glyphicon glyphicon-refresh"></span> 刷新验证码
         </button>
       </span>
-                            <input type="text" class="form-control center-block" id="validate" name="validate" placeholder="Enter the characters from the image">
+                            <input type="text" class="form-control center-block" id="validate" name="validate" placeholder="输入图片中的验证码">
                         </div>
                     </div>
 
