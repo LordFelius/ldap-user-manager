@@ -21,7 +21,7 @@ if (isset($_POST['change_password'])) {
         render_header("$ORGANISATION_NAME account manager - password changed");
         ?>
         <div class="alert alert-success">
-            <p class="text-center">Your password has been changed.</p>
+            <p class="text-center">密码修改成功！</p>
         </div>
         <?php
         render_footer();
@@ -46,7 +46,7 @@ if (isset($invalid_chars)) {  ?>
 
 if (isset($mismatched)) {  ?>
     <div class="alert alert-warning">
-        <p class="text-center">The passwords didn't match.</p>
+        <p class="text-center">两次输入不匹配。</p>
     </div>
 <?php }
 
