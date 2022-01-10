@@ -40,7 +40,7 @@ else {
 # Smarty
 #==============================================================================
     if (!defined("SMARTY")) {
-        define("SMARTY", "/usr/share/php/Smarty/Smarty.class.php");
+        define("SMARTY", "../3rd/Smarty/Smarty.class.php");
     }
     require_once(SMARTY);
 
