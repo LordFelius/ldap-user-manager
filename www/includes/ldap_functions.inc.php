@@ -479,6 +479,30 @@ function ldap_get_dn_of_user($ldap_connection,$user_name) {
 
 }
 
+//search with account_attribute; return search_attribute
+function ldap_get_userName_from_userId($ldap_connection,$user_id) {
+
+    global $log_prefix, $LDAP, $LDAP_DEBUG;
+
+    if (isset($user_id)) {
+
+        $ldap_search_query = "(${LDAP['account_attribute']}=" . ldap_escape($user_id, "", LDAP_ESCAPE_FILTER) . ")";
+        $ldap_search = @ ldap_search($ldap_connection, "${LDAP['user_dn']}", $ldap_search_query , array($LDAP['search_attribute']));
+        $result = @ ldap_get_entries($ldap_connection, $ldap_search);
+
+        if (isset($result[0][$LDAP['search_attribute']][0])) {
+            return $result[0][$LDAP['search_attribute']][0];
+        }
+
+    }
+
+    return FALSE;
+
+}
+
+//mind:$attributes must be array
+//search with search_attribute & attribute_map; return attributes
+//what we really want is result[0]['attribute'][0]
 function ldap_get_user_attributes($ldap_connection,$user_name,$attributes) {
 
     global $log_prefix, $LDAP, $LDAP_DEBUG;
@@ -489,7 +513,9 @@ function ldap_get_user_attributes($ldap_connection,$user_name,$attributes) {
         $ldap_search = @ ldap_search($ldap_connection, "${LDAP['user_dn']}", $ldap_search_query , $attributes);
         $result = @ ldap_get_entries($ldap_connection, $ldap_search);
 
-        return $result;
+        if (isset($result)) {
+            return $result;
+        }
     }
 
     return FALSE;
