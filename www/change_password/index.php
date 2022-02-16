@@ -17,6 +17,8 @@ if (isset($_POST['change_password'])) {
 
         $ldap_connection = open_ldap_connection();
         ldap_change_password($ldap_connection,$USER_ID,$_POST['password']) or die("change_ldap_password() failed.");
+        $user_name = ldap_get_userName_from_userId($ldap_connection,    $USER_ID);
+        $user_mail = ldap_get_user_attributes($ldap_connection,$user_name,array('mail'))[0]['mail'][0];
 
         render_header("$ORGANISATION_NAME account manager - password changed");
         ?>
@@ -24,6 +26,14 @@ if (isset($_POST['change_password'])) {
             <p class="text-center">密码修改成功！</p>
         </div>
         <?php
+        $mail_subject = "您在 $ORGANISATION_NAME 的密码已被修改。";
+        $mail_body = <<<EoT
+您在 <a href="${SITE_PROTOCOL}${SERVER_HOSTNAME}${SERVER_PATH}">{$ORGANISATION_NAME}</a>的密码已被自助修改。
+<p>
+若并非您的操作，请联系站点管理员。<br>
+EoT;
+        include_once "mail_functions.inc.php";
+        $sent_email = send_email($user_mail,$user_mail,$mail_subject,$mail_body);
         render_footer();
         exit(0);
     }
