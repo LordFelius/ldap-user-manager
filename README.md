@@ -1,6 +1,7 @@
 Mind: this branch is translated into Chinsese and modified for my own environment.
 对部分页面进行了中文翻译，并有一些个人的个性化配置。
 Migrated: 需要安装Smarty3并手动配置路径。
+依赖：php-Mailer
 
 ## Changes of this fork:
 
